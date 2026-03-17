@@ -1,13 +1,13 @@
 import SwiftUI
 
 struct NewsCard: View {
-    let headline: String
-
+    let article: Article
+    @ObservedObject var bookmarkManager = BookmarkManager.shared  // ← add this
     var body: some View {
         HStack(alignment: .center, spacing: 12) {
 
             // Left Image
-            AsyncImage(url: URL(string: "https://img.freepik.com/free-photo/type-entertainment-complex-popular-resort-with-pools-water-parks-turkey-with-more-than-5-million-visitors-year-amara-dolce-vita-luxury-hotel-resort-tekirova-kemer_146671-18728.jpg?semt=ais_hybrid&w=740&q=80")) {
+            AsyncImage(url: URL(string: article.urlToImage ?? "")) {
                 image in
                 image
                     .resizable()
@@ -31,7 +31,7 @@ struct NewsCard: View {
                     .foregroundColor(.black)
                     .textCase(.uppercase)
 
-                Text(headline)
+                Text(article.articleDescription ?? "No description available")
                     .font(.caption)
                     .fontWeight(.semibold)
                     .foregroundColor(.black)
@@ -63,6 +63,17 @@ struct NewsCard: View {
                     Text("14 min ago")
                         .font(.caption)
                         .foregroundColor(.gray)
+                    Spacer()
+
+                                        // ← Bookmark Button
+                                        Button {
+                                            bookmarkManager.toggleBookmark(article: article)
+                                        } label: {
+                                            Image(systemName: bookmarkManager.isBookmarked(article: article)
+                                                  ? "bookmark.fill"  // ← saved
+                                                  : "bookmark")      // ← not saved
+                                                .foregroundColor(.blue)
+                                        }
                 }
             }
             .frame(maxWidth: .infinity, alignment: .leading)
@@ -72,11 +83,11 @@ struct NewsCard: View {
         .background(Color.gray.opacity(0.01))
         .cornerRadius(14).overlay( // ← add this
             RoundedRectangle(cornerRadius: 14)
-                .stroke(Color.gray.opacity(0.2), lineWidth: 0.5))
+                .stroke(Color.gray.opacity(0.3), lineWidth: 0.5))
     }
 }
 
-#Preview {
-    NewsCard(headline: "India wins Test series against Australia in dramatic fashion")
-        .padding()
-}
+//#Preview {
+//    NewsCard(headline: "India wins Test series against Australia in dramatic fashion")
+//        .padding()
+//}

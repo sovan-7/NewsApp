@@ -1,16 +1,10 @@
 import SwiftUI
 
 struct HomeView: View {
+    @StateObject private var viewModel = HomeViewModel()
     @State private var selectedTab = 0
     let tabs = ["Sports", "Politics", "Business", "Health", "Science"]
-    let tabData: [Int: [String]] = [
-        0: ["India wins Test series against Australia", "Premier League title race heats up", "NBA playoffs: Top seeds secure leads", "Global leaders meet at UN summit", "New trade agreement signed", "Parliament approves infrastructure bill",],
-        1: ["Global leaders meet at UN summit", "New trade agreement signed", "Parliament approves infrastructure bill",],
-        2: ["Tech stocks rally after earnings", "Startup raises $500M funding", "Oil prices drop amid demand concerns"],
-        3: ["Sleep quality linked to heart health", "WHO releases updated diet guidelines", "Breakthrough in Alzheimer's treatment"],
-        4: ["NASA confirms water ice on Mars", "AI model achieves human-level benchmark", "New deep-sea creature discovered"]
-    ]
-    
+   
     var body: some View {
         VStack(spacing: 0) {
             
@@ -43,18 +37,44 @@ struct HomeView: View {
             
             // Tabs
             NewsTab(tabs: tabs, selectedTab: $selectedTab)
-                .padding(.bottom, 10)
-            
-            // ← This is the key fix
-            ScrollView {
-                LazyVStack(spacing: 12) {
-                    ForEach(tabData[selectedTab] ?? [], id: \.self) { item in
-                        NewsCard(headline: item)
+                .padding(.bottom, 10).onChange(of: selectedTab) {   // ← fetch on tab change
+                    Task {
+                        await viewModel.fetchNews(for: selectedTab)
                     }
                 }
-                .padding(.horizontal, 16)
-                .padding(.bottom, 16)
+            if viewModel.isLoading {
+                            Spacer()
+                            ProgressView("Loading...")
+                            Spacer()
+
+                        } else if let error = viewModel.errorMessage {
+                            Spacer()
+                            Text(error)
+                                .foregroundColor(.red)
+                            Spacer()
+
+                        } else {
+                            ScrollView {
+                                LazyVStack(spacing: 12) {
+                                    ForEach(viewModel.articles , id: \.url) { article in
+                                        ZStack {
+                                                                            NavigationLink(destination: NewsDetails(article: article)) {
+                                                                                EmptyView()
+                                                                            }
+                                                                            .opacity(0)
+
+                                                                            NewsCard(article: article)
+                                                                        }
+                                    }
+                                }
+                                .padding(.horizontal, 16)
+                                .padding(.bottom, 16)
+                                
+                            }
             }
-        }
+        }.task {
+            await viewModel.fetchNews(for: selectedTab)  // ← called when screen first appears
+        }.background(Color.white)
+           
     }
 }

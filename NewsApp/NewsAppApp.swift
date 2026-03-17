@@ -9,6 +9,10 @@ import SwiftUI
 
 @main
 struct NewsAppApp: App {
+    init() {
+           UITabBar.appearance().unselectedItemTintColor = .systemGray  // ✅ gray for unselected
+           UITabBar.appearance().tintColor = .black                     // ✅ black for selected
+       }
     var body: some Scene {
         WindowGroup {
             DashboardView()

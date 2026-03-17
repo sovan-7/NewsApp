@@ -1,4 +1,3 @@
-
 import Foundation
 
 // MARK: - NewsResponse
@@ -13,11 +12,17 @@ struct Article: Codable {
     let source: Source
     let author: String?
     let title: String
-    let description: String?
+    let articleDescription: String?
     let url: String
     let urlToImage: String?
     let publishedAt: Date
     let content: String?
+
+    // ✅ CodingKeys is INSIDE Article
+    enum CodingKeys: String, CodingKey {
+        case source, author, title, url, urlToImage, publishedAt, content
+        case articleDescription = "description"
+    }
 }
 
 // MARK: - Source
