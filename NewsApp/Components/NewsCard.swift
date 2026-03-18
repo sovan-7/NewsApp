@@ -6,26 +6,42 @@ struct NewsCard: View {
     var body: some View {
         HStack(alignment: .center, spacing: 12) {
 
-            // Left Image
-            AsyncImage(url: URL(string: article.urlToImage ?? "")) {
-                image in
-                image
-                    .resizable()
-                    .scaledToFill() // ← changed from scaledToFit
-                    .frame(width: 100, height: 100)
-                    .clipShape(RoundedRectangle(cornerRadius: 10))
-            } placeholder: {
-                RoundedRectangle(cornerRadius: 10)
-                    .fill(Color(.systemGray5))
-                    .overlay(ProgressView())
-                    .frame(width: 100, height: 100)
+            AsyncImage(url: URL(string: article.urlToImage ?? "")) { phase in
+                switch phase {
+                case .success(let image):
+                    image
+                        .resizable()
+                        .scaledToFill()
+                        .frame(width: 100, height: 100)
+                        .clipShape(RoundedRectangle(cornerRadius: 10))
+                case .failure:
+                    RoundedRectangle(cornerRadius: 10)
+                        .fill(Color(.systemGray5))
+                        .frame(width: 100, height: 100)
+                        .overlay(
+                            Image(systemName: "newspaper")
+                                .font(.system(size: 30))
+                                .foregroundColor(.gray)
+                        )
+                case .empty:
+                    RoundedRectangle(cornerRadius: 10)
+                        .fill(Color(.lightGray).opacity(0.5))
+                        .frame(width: 100, height: 100)
+                        .overlay(
+                            Image(systemName: "newspaper")
+                                .font(.system(size: 30))
+                                .foregroundColor(.gray)
+                        )
+                @unknown default:
+                    EmptyView()
+                }
             }
-            .frame(width: 100, height: 100) // ← fixes AsyncImage sizing
+            .frame(width: 100, height: 100)
 
             // Right VStack
             VStack(alignment: .leading, spacing: 6) {
 
-                Text("Sports")
+                Text(article.author  ?? "No Data")
                     .font(.caption)
                     .fontWeight(.regular)
                     .foregroundColor(.black)
@@ -52,7 +68,7 @@ struct NewsCard: View {
                     }
                     .frame(width: 15, height: 15) // ← fixes small AsyncImage sizing
 
-                    Text("BBC News")
+                    Text( "BBC News")
                         .font(.caption)
                         .foregroundColor(.gray)
 
@@ -60,7 +76,7 @@ struct NewsCard: View {
                         .font(.system(size: 12))
                         .foregroundColor(.black)
 
-                    Text("14 min ago")
+                    Text(article.publishedAt.readableString  )
                         .font(.caption)
                         .foregroundColor(.gray)
                     Spacer()
@@ -84,6 +100,14 @@ struct NewsCard: View {
         .cornerRadius(14).overlay( // ← add this
             RoundedRectangle(cornerRadius: 14)
                 .stroke(Color.gray.opacity(0.3), lineWidth: 0.5))
+    }
+    
+}
+extension Date {
+    var readableString: String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "MMM dd, yyyy"
+        return formatter.string(from: self)
     }
 }
 

@@ -7,7 +7,7 @@ struct AppRouter: View {
     var body: some View {
         
         if appState.isLoggedIn {
-           // DashboardView()
+            DashboardView()
         } else {
             LoginView()
         }

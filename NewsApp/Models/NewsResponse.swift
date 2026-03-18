@@ -8,7 +8,7 @@ struct NewsResponse: Codable {
 }
 
 // MARK: - Article
-struct Article: Codable {
+struct Article: Hashable, Equatable, Codable {
     let source: Source
     let author: String?
     let title: String
@@ -18,7 +18,6 @@ struct Article: Codable {
     let publishedAt: Date
     let content: String?
 
-    // ✅ CodingKeys is INSIDE Article
     enum CodingKeys: String, CodingKey {
         case source, author, title, url, urlToImage, publishedAt, content
         case articleDescription = "description"
@@ -26,7 +25,7 @@ struct Article: Codable {
 }
 
 // MARK: - Source
-struct Source: Codable {
+struct Source: Hashable, Equatable, Codable {  // ✅ added Hashable & Equatable
     let id: String?
     let name: String
 }
