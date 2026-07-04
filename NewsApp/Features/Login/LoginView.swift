@@ -7,9 +7,25 @@
 
 import SwiftUI
 
+struct LoginFormError{
+    let emailErrorMsg:String=""
+    let passwordErrorMsg:String=""
+}
+
 struct LoginView: View {
+    @State private var email=""
+    @State private var password=""
+    @State private var loginFormError=LoginFormError()
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        Form{
+            Section(header: Text("Login")){
+                TextField("Email", text: $email)
+                SecureField("Password", text: $password)
+            }
+            Button("Login"){
+                
+            }
+        }
     }
 }
 

@@ -102,16 +102,5 @@ struct NewsCard: View {
                 .stroke(Color.gray.opacity(0.3), lineWidth: 0.5))
     }
     
-}
-extension Date {
-    var readableString: String {
-        let formatter = DateFormatter()
-        formatter.dateFormat = "MMM dd, yyyy"
-        return formatter.string(from: self)
-    }
-}
 
-//#Preview {
-//    NewsCard(headline: "India wins Test series against Australia in dramatic fashion")
-//        .padding()
-//}
+}

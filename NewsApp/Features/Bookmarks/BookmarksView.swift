@@ -34,6 +34,8 @@ struct BookmarksView: View {
                         .padding()
                     }
                 }
+                } .navigationDestination(item: $selectedArticle) { article in  // ✅ triggers navigation
+                    NewsDetails(article: article)
                 }
             
         }
