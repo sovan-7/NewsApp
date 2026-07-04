@@ -18,10 +18,16 @@ struct LoginView: View {
     @State private var isPasswordVisible: Bool = false
     @State private var rememberMe: Bool = false
     @State private var loginFormError=LoginFormError()
+    private let accentColor = Color(red: 0x37 / 255, green: 0x8A / 255, blue: 0xDD / 255)
+        private let accentLight = Color(red: 0xE6 / 255, green: 0xF1 / 255, blue: 0xFB / 255)
+        private let borderColor = Color(red: 0xD8 / 255, green: 0xD8 / 255, blue: 0xD8 / 255)
+        private let secondaryText = Color(red: 0x6B / 255, green: 0x6B / 255, blue: 0x6B / 255)
+        private let mutedIcon = Color(red: 0x9A / 255, green: 0x9A / 255, blue: 0x9A / 255)
     var body: some View {
         
         ScrollView{
             VStack{
+                logoBadge.padding(.top,40)
                 VStack{
                     Text("Welcome Back").font(.system(size: 22,weight: .medium)).foregroundColor(.black)
                     Text("Sign in to pick up where you left off.").font(.system(size: 14)).foregroundColor(.black).multilineTextAlignment(.center)
@@ -33,14 +39,19 @@ struct LoginView: View {
                         
                     labelPasswordField
                     Button( action: {}){
-                        Text("Sign in").font(.system(size: 16,weight: .medium)).foregroundColor(Color.white).frame(minWidth: .infinity).frame(height: 46).background(Color.blue).cornerRadius(10)
-                    }
+                        Text("Sign in").font(.system(size: 16,weight:    .medium)).foregroundColor(Color.white).frame(maxWidth: .infinity).frame(height: 46).background(Color.blue).cornerRadius(10)
+                    }.padding(.top,4)
                    
                 }
-            }
+            }.padding(.horizontal,24)
         }
     }
     
+    private var logoBadge:some View{
+        RoundedRectangle(cornerRadius: 14).fill(.black).frame(width: 56, height: 56).overlay(){
+            Image("bolt.fill").font(.system(size: 24)).foregroundColor(Color.white)
+        }
+    }
     
     @ViewBuilder
     private func labelField<Content:View>(label:String,icon:String,placeHolder:String,@ViewBuilder content:()    -> Content) -> some View {
@@ -60,12 +71,21 @@ struct LoginView: View {
             Text("Password").font(.system(size: 13)).foregroundColor(.secondary)
             HStack(spacing: 8,){
                 Image(systemName: "lock").font(.system(size: 16)).foregroundColor(.blue).frame(width: 18)
-                if 0==0{
-                    TextField("Enter your password", text: $password)
-                }else{
-                    SecureField("Enter your password", text: $password)
+                Group{
+                    if isPasswordVisible{
+                        TextField("Enter your password", text: $password)
+                    }else{
+                        SecureField("Enter your password", text: $password)
+                    }
+                }.font(.system(size: 15)).foregroundColor(.black)
+                Button( action: {
+                    isPasswordVisible.toggle()
+                }){
+                    Image(systemName: isPasswordVisible ? "eye.slash" : "eye")
+                        .font(.system(size: 16))
+                        .foregroundColor(.gray)
                 }
-            }.padding(.horizontal,12).frame(height: 44).overlay(RoundedRectangle(cornerRadius: 10).stroke(Color.gray, lineWidth: 1))
+            }.padding(.horizontal,12).frame(height: 44).overlay(RoundedRectangle(cornerRadius: 10).stroke(borderColor, lineWidth: 1))
             
         }
     }
