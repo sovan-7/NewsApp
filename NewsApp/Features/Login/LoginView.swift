@@ -39,12 +39,29 @@ struct LoginView: View {
                         
                     labelPasswordField
                     Button( action: {}){
-                        Text("Sign in").font(.system(size: 16,weight:    .medium)).foregroundColor(secondaryText).frame(maxWidth: .infinity).frame(height: 46).background(accentColor).cornerRadius(10)
+                        Text("Sign in").font(.system(size: 16,weight:    .medium)).foregroundColor(.white).frame(maxWidth: .infinity).frame(height: 46).background(accentColor).cornerRadius(10)
                     }.padding(.top,4)
-                   
-                }
-            }.padding(.horizontal,24)
-        }.background(Color.white)
+                    HStack(spacing: 4) {
+                                       Text("New here?")
+                                           .font(.system(size: 13))
+                                           .foregroundColor(secondaryText)
+                                       Button(action: {}) {
+                                           Text("Create an account")
+                                               .font(.system(size: 13, weight: .medium))
+                                               .foregroundColor(accentColor)
+                                       }
+                                   }
+                                   .padding(.top, 12)
+                                   .padding(.bottom, 32)
+                               }.padding(.top, 12)
+                    .padding(.bottom, 32)
+                               
+                
+                
+            }.padding(.horizontal, 24)
+                
+        }.background(Color.white)        .scrollBounceBehavior(.basedOnSize)
+
     }
     
     private var logoBadge:some View{
