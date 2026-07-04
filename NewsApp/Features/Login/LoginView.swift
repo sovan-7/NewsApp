@@ -29,8 +29,8 @@ struct LoginView: View {
             VStack{
                 logoBadge.padding(.top,40)
                 VStack{
-                    Text("Welcome Back").font(.system(size: 22,weight: .medium)).foregroundColor(.black)
-                    Text("Sign in to pick up where you left off.").font(.system(size: 14)).foregroundColor(secondaryText).multilineTextAlignment(.center)
+                    Text("Welcome Back").font(.system(size: 25,weight: .bold)).foregroundColor(.black)
+                    Text("Sign in to pick up where you left off.").font(.system(size: 16)).foregroundColor(secondaryText).multilineTextAlignment(.center)
                 }.padding(.bottom,8)
                 VStack( spacing:16){
                     labelField(label: "Email", icon: "envelope", placeHolder: "name@company.com", ){
@@ -38,16 +38,33 @@ struct LoginView: View {
                     }
                         
                     labelPasswordField
+                    HStack {
+                                            Button(action: { rememberMe.toggle() }) {
+                                                HStack(spacing: 6) {
+                                                    Image(systemName: rememberMe ? "checkmark.square.fill" : "square")
+                                                        .foregroundColor(rememberMe ? accentColor : mutedIcon)
+                                                    Text("Remember me")
+                                                        .font(.system(size: 15))
+                                                        .foregroundColor(secondaryText)
+                                                }
+                                            }
+                                            Spacer()
+                                            Button(action: {}) {
+                                                Text("Forgot?")
+                                                    .font(.system(size: 15,weight: .bold))
+                                                    .foregroundColor(accentColor)
+                                            }
+                                        }
                     Button( action: {}){
-                        Text("Sign in").font(.system(size: 16,weight:    .medium)).foregroundColor(.white).frame(maxWidth: .infinity).frame(height: 46).background(accentColor).cornerRadius(10)
+                        Text("Sign in").font(.system(size: 18,weight:    .bold)).foregroundColor(.white).frame(maxWidth: .infinity).frame(height: 50).background(accentColor).cornerRadius(10)
                     }.padding(.top,4)
                     HStack(spacing: 4) {
                                        Text("New here?")
-                                           .font(.system(size: 13))
+                                           .font(.system(size: 15))
                                            .foregroundColor(secondaryText)
                                        Button(action: {}) {
                                            Text("Create an account")
-                                               .font(.system(size: 13, weight: .medium))
+                                               .font(.system(size: 15, weight: .bold))
                                                .foregroundColor(accentColor)
                                        }
                                    }
@@ -55,12 +72,10 @@ struct LoginView: View {
                                    .padding(.bottom, 32)
                                }.padding(.top, 12)
                     .padding(.bottom, 32)
-                               
-                
                 
             }.padding(.horizontal, 24)
                 
-        }.background(Color.white)        .scrollBounceBehavior(.basedOnSize)
+        }.background(Color.white).scrollBounceBehavior(.basedOnSize)
 
     }
     
@@ -73,19 +88,19 @@ struct LoginView: View {
     @ViewBuilder
     private func labelField<Content:View>(label:String,icon:String,placeHolder:String,@ViewBuilder content:()    -> Content) -> some View {
         VStack(alignment: .leading,spacing: 6){
-            Text(label).font(.system(size: 13)).foregroundColor(secondaryText)
+            Text(label).font(.system(size: 15,weight: .medium)).foregroundColor(secondaryText)
             HStack{
                 HStack(spacing: 8,){
                     Image(systemName: icon).font(.system(size: 16)).foregroundColor(mutedIcon).frame(width: 18)
                     content().font(.system(size: 15)).foregroundColor(.black)
-                }.padding(.horizontal,12).frame(height: 44).overlay(RoundedRectangle(cornerRadius: 10).stroke(borderColor, lineWidth: 1))
+                }.padding(.horizontal,12).frame(height: 46).overlay(RoundedRectangle(cornerRadius: 10).stroke(borderColor, lineWidth: 1))
             }
         }
     }
     
     private var labelPasswordField: some View {
         VStack(alignment: .leading,spacing: 6){
-            Text("Password").font(.system(size: 13)).foregroundColor(secondaryText)
+            Text("Password").font(.system(size: 15,weight: .medium)).foregroundColor(secondaryText)
             HStack(spacing: 8,){
                 Image(systemName: "lock").font(.system(size: 16)).foregroundColor(mutedIcon).frame(width: 18)
                 Group{
@@ -94,7 +109,7 @@ struct LoginView: View {
                     }else{
                         SecureField("Enter your password", text: $password)
                     }
-                }.font(.system(size: 15)).foregroundColor(.black)
+                }.font(.system(size: 17)).foregroundColor(.black)
                 Button( action: {
                     isPasswordVisible.toggle()
                 }){
@@ -102,7 +117,7 @@ struct LoginView: View {
                         .font(.system(size: 16))
                         .foregroundColor(mutedIcon)
                 }
-            }.padding(.horizontal,12).frame(height: 44).overlay(RoundedRectangle(cornerRadius: 10).stroke(borderColor, lineWidth: 1))
+            }.padding(.horizontal,12).frame(height: 46).overlay(RoundedRectangle(cornerRadius: 10).stroke(borderColor, lineWidth: 1))
             
         }
     }
