@@ -20,15 +20,14 @@ struct LoginView: View {
         
         ScrollView{
             VStack{
-                                    Section(header: Text("Login")){
-                        labelField(label: "Email", icon: "envelope", placeHolder: "name@company.com", ){
-                            TextField("name@company.com", text: $email).keyboardType(.emailAddress).textInputAutocapitalization(.never).autocorrectionDisabled(true)
-                        }
+                                   
+                VStack{
+                    labelField(label: "Email", icon: "envelope", placeHolder: "name@company.com", ){
+                        TextField("name@company.com", text: $email).keyboardType(.emailAddress).textInputAutocapitalization(.never).autocorrectionDisabled(true)
+                    }
                         
                     
-                    Button("Login"){
-                        
-                    }
+                   
                 }
             }
         }
