@@ -9,12 +9,12 @@ import SwiftUI
 
 @main
 struct NewsAppApp: App {
-    @State private var appState = AppState()
+    @StateObject  private var appState = AppState()
     let persistence = PersistenceController.shared
     var body: some Scene {
         WindowGroup {
             AppRouter()
-                            .environment(appState)
+                            .environmentObject(appState)
         }
     }
 }

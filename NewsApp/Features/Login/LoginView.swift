@@ -17,16 +17,22 @@ struct LoginView: View {
     @State private var password=""
     @State private var loginFormError=LoginFormError()
     var body: some View {
-        Form{
-            Section(header: Text("Login")){
-                TextField("Email", text: $email)
-                SecureField("Password", text: $password)
-            }
-            Button("Login"){
-                
+        
+        ScrollView{
+            VStack{
+                Form{
+                    Section(header: Text("Login")){
+                        TextField("Email", text: $email)
+                        SecureField("Password", text: $password)
+                    }
+                    Button("Login"){
+                        
+                    }
+                }
             }
         }
     }
+        
 }
 
 #Preview {
