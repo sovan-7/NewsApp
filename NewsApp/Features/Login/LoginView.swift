@@ -15,18 +15,26 @@ struct LoginFormError{
 struct LoginView: View {
     @State private var email=""
     @State private var password=""
+    @State private var isPasswordVisible: Bool = false
+    @State private var rememberMe: Bool = false
     @State private var loginFormError=LoginFormError()
     var body: some View {
         
         ScrollView{
             VStack{
-                                   
                 VStack{
+                    Text("Welcome Back").font(.system(size: 22,weight: .medium)).foregroundColor(.black)
+                    Text("Sign in to pick up where you left off.").font(.system(size: 14)).foregroundColor(.black).multilineTextAlignment(.center)
+                }.padding(.bottom,8)
+                VStack( spacing:16){
                     labelField(label: "Email", icon: "envelope", placeHolder: "name@company.com", ){
                         TextField("name@company.com", text: $email).keyboardType(.emailAddress).textInputAutocapitalization(.never).autocorrectionDisabled(true)
                     }
                         
-                    
+                    labelPasswordField
+                    Button( action: {}){
+                        Text("Sign in").font(.system(size: 16,weight: .medium)).foregroundColor(Color.white).frame(minWidth: .infinity).frame(height: 46).background(Color.blue).cornerRadius(10)
+                    }
                    
                 }
             }
@@ -39,8 +47,6 @@ struct LoginView: View {
         VStack(alignment: .leading,spacing: 6){
             Text(label).font(.system(size: 13)).foregroundColor(.secondary)
             HStack{
-                
-                
                 HStack(spacing: 8,){
                     Image(systemName: icon).font(.system(size: 16)).foregroundColor(.blue).frame(width: 18)
                     content().font(.system(size: 15)).foregroundColor(.black)
