@@ -20,11 +20,12 @@ struct LoginView: View {
         
         ScrollView{
             VStack{
-                Form{
-                    Section(header: Text("Login")){
-                        TextField("Email", text: $email)
-                        SecureField("Password", text: $password)
-                    }
+                                    Section(header: Text("Login")){
+                        labelField(label: "Email", icon: "envelope", placeHolder: "name@company.com", ){
+                            TextField("name@company.com", text: $email).keyboardType(.emailAddress).textInputAutocapitalization(.never).autocorrectionDisabled(true)
+                        }
+                        
+                    
                     Button("Login"){
                         
                     }
@@ -32,9 +33,38 @@ struct LoginView: View {
             }
         }
     }
-        
+    
+    
+    @ViewBuilder
+    private func labelField<Content:View>(label:String,icon:String,placeHolder:String,@ViewBuilder content:()    -> Content) -> some View {
+        VStack(alignment: .leading,spacing: 6){
+            Text(label).font(.system(size: 13)).foregroundColor(.secondary)
+            HStack{
+                
+                
+                HStack(spacing: 8,){
+                    Image(systemName: icon).font(.system(size: 16)).foregroundColor(.blue).frame(width: 18)
+                    content().font(.system(size: 15)).foregroundColor(.black)
+                }.padding(.horizontal,12).frame(height: 44).overlay(RoundedRectangle(cornerRadius: 10).stroke(Color.gray, lineWidth: 1))
+            }
+        }
+    }
+    
+    private var labelPasswordField: some View {
+        VStack(alignment: .leading,spacing: 6){
+            Text("Password").font(.system(size: 13)).foregroundColor(.secondary)
+            HStack(spacing: 8,){
+                Image(systemName: "lock").font(.system(size: 16)).foregroundColor(.blue).frame(width: 18)
+                if 0==0{
+                    TextField("Enter your password", text: $password)
+                }else{
+                    SecureField("Enter your password", text: $password)
+                }
+            }.padding(.horizontal,12).frame(height: 44).overlay(RoundedRectangle(cornerRadius: 10).stroke(Color.gray, lineWidth: 1))
+            
+        }
+    }
 }
-
 #Preview {
     LoginView()
 }
