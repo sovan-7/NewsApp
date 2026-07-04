@@ -30,7 +30,7 @@ struct LoginView: View {
                 logoBadge.padding(.top,40)
                 VStack{
                     Text("Welcome Back").font(.system(size: 22,weight: .medium)).foregroundColor(.black)
-                    Text("Sign in to pick up where you left off.").font(.system(size: 14)).foregroundColor(.black).multilineTextAlignment(.center)
+                    Text("Sign in to pick up where you left off.").font(.system(size: 14)).foregroundColor(secondaryText).multilineTextAlignment(.center)
                 }.padding(.bottom,8)
                 VStack( spacing:16){
                     labelField(label: "Email", icon: "envelope", placeHolder: "name@company.com", ){
@@ -39,38 +39,38 @@ struct LoginView: View {
                         
                     labelPasswordField
                     Button( action: {}){
-                        Text("Sign in").font(.system(size: 16,weight:    .medium)).foregroundColor(Color.white).frame(maxWidth: .infinity).frame(height: 46).background(Color.blue).cornerRadius(10)
+                        Text("Sign in").font(.system(size: 16,weight:    .medium)).foregroundColor(secondaryText).frame(maxWidth: .infinity).frame(height: 46).background(accentColor).cornerRadius(10)
                     }.padding(.top,4)
                    
                 }
             }.padding(.horizontal,24)
-        }
+        }.background(Color.white)
     }
     
     private var logoBadge:some View{
-        RoundedRectangle(cornerRadius: 14).fill(.black).frame(width: 56, height: 56).overlay(){
-            Image("bolt.fill").font(.system(size: 24)).foregroundColor(Color.white)
+        RoundedRectangle(cornerRadius: 14).fill(accentLight).frame(width: 56, height: 56).overlay(){
+            Image("bolt.fill").font(.system(size: 24)).foregroundColor(accentColor)
         }
     }
     
     @ViewBuilder
     private func labelField<Content:View>(label:String,icon:String,placeHolder:String,@ViewBuilder content:()    -> Content) -> some View {
         VStack(alignment: .leading,spacing: 6){
-            Text(label).font(.system(size: 13)).foregroundColor(.secondary)
+            Text(label).font(.system(size: 13)).foregroundColor(secondaryText)
             HStack{
                 HStack(spacing: 8,){
-                    Image(systemName: icon).font(.system(size: 16)).foregroundColor(.blue).frame(width: 18)
+                    Image(systemName: icon).font(.system(size: 16)).foregroundColor(mutedIcon).frame(width: 18)
                     content().font(.system(size: 15)).foregroundColor(.black)
-                }.padding(.horizontal,12).frame(height: 44).overlay(RoundedRectangle(cornerRadius: 10).stroke(Color.gray, lineWidth: 1))
+                }.padding(.horizontal,12).frame(height: 44).overlay(RoundedRectangle(cornerRadius: 10).stroke(borderColor, lineWidth: 1))
             }
         }
     }
     
     private var labelPasswordField: some View {
         VStack(alignment: .leading,spacing: 6){
-            Text("Password").font(.system(size: 13)).foregroundColor(.secondary)
+            Text("Password").font(.system(size: 13)).foregroundColor(secondaryText)
             HStack(spacing: 8,){
-                Image(systemName: "lock").font(.system(size: 16)).foregroundColor(.blue).frame(width: 18)
+                Image(systemName: "lock").font(.system(size: 16)).foregroundColor(mutedIcon).frame(width: 18)
                 Group{
                     if isPasswordVisible{
                         TextField("Enter your password", text: $password)
@@ -83,7 +83,7 @@ struct LoginView: View {
                 }){
                     Image(systemName: isPasswordVisible ? "eye.slash" : "eye")
                         .font(.system(size: 16))
-                        .foregroundColor(.gray)
+                        .foregroundColor(mutedIcon)
                 }
             }.padding(.horizontal,12).frame(height: 44).overlay(RoundedRectangle(cornerRadius: 10).stroke(borderColor, lineWidth: 1))
             
