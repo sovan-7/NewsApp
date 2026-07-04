@@ -34,7 +34,17 @@ struct LoginView: View {
                 }.padding(.bottom,8)
                 VStack( spacing:16){
                     labelField(label: "Email", icon: "envelope", placeHolder: "name@company.com", ){
-                        TextField("name@company.com", text: $email).keyboardType(.emailAddress).textInputAutocapitalization(.never).autocorrectionDisabled(true)
+                        ZStack(alignment: .leading) {
+                                if email.isEmpty {
+                                    Text("name@company.com")
+                                        .foregroundColor(mutedIcon)
+                                }
+                                TextField("", text: $email)
+                                    .keyboardType(.emailAddress)
+                                    .textInputAutocapitalization(.never)
+                                    .autocorrectionDisabled(true)
+                                    .foregroundColor(.black)
+                                    .tint(accentColor)
                     }
                         
                     labelPasswordField
@@ -81,7 +91,7 @@ struct LoginView: View {
     
     private var logoBadge:some View{
         RoundedRectangle(cornerRadius: 14).fill(accentLight).frame(width: 56, height: 56).overlay(){
-            Image("bolt.fill").font(.system(size: 24)).foregroundColor(accentColor)
+            Image(systemName:"bolt.fill").font(.system(size: 24)).foregroundColor(accentColor)
         }
     }
     
