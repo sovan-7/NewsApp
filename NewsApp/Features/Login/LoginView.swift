@@ -18,7 +18,6 @@ struct LoginView: View {
     @State private var isPasswordVisible: Bool = false
     @State private var rememberMe: Bool = false
     @State private var loginFormError=LoginFormError()
-    private let accentColor = Color(red: 0x37 / 255, green: 0x8A / 255, blue: 0xDD / 255)
     private let accentColor   = Color(hex: 0x378ADD)
     private let accentLight   = Color(hex: 0xE6F1FB)
     private let borderColor   = Color(hex: 0xD8D8D8)
