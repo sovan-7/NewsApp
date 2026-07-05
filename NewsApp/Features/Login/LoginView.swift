@@ -19,10 +19,11 @@ struct LoginView: View {
     @State private var rememberMe: Bool = false
     @State private var loginFormError=LoginFormError()
     private let accentColor = Color(red: 0x37 / 255, green: 0x8A / 255, blue: 0xDD / 255)
-        private let accentLight = Color(red: 0xE6 / 255, green: 0xF1 / 255, blue: 0xFB / 255)
-        private let borderColor = Color(red: 0xD8 / 255, green: 0xD8 / 255, blue: 0xD8 / 255)
-        private let secondaryText = Color(red: 0x6B / 255, green: 0x6B / 255, blue: 0x6B / 255)
-        private let mutedIcon = Color(red: 0x9A / 255, green: 0x9A / 255, blue: 0x9A / 255)
+    private let accentColor   = Color(hex: 0x378ADD)
+    private let accentLight   = Color(hex: 0xE6F1FB)
+    private let borderColor   = Color(hex: 0xD8D8D8)
+    private let secondaryText = Color(hex: 0x6B6B6B)
+    private let mutedIcon     = Color(hex: 0x9A9A9A)
     var body: some View {
         
         ScrollView{
@@ -35,16 +36,17 @@ struct LoginView: View {
                 VStack( spacing:16){
                     labelField(label: "Email", icon: "envelope", placeHolder: "name@company.com", ){
                         ZStack(alignment: .leading) {
-                                if email.isEmpty {
-                                    Text("name@company.com")
-                                        .foregroundColor(mutedIcon)
-                                }
-                                TextField("", text: $email)
-                                    .keyboardType(.emailAddress)
-                                    .textInputAutocapitalization(.never)
-                                    .autocorrectionDisabled(true)
-                                    .foregroundColor(.black)
-                                    .tint(accentColor)
+                            if email.isEmpty {
+                                Text("name@company.com")
+                                    .foregroundColor(mutedIcon)
+                            }
+                            TextField("", text: $email)
+                                .keyboardType(.emailAddress)
+                                .textInputAutocapitalization(.never)
+                                .autocorrectionDisabled(true)
+                                .foregroundColor(.black)
+                                .tint(accentColor)
+                        }
                     }
                         
                     labelPasswordField
