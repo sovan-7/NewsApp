@@ -34,18 +34,17 @@ struct LoginView: View {
                 }.padding(.bottom,8)
                 VStack( spacing:16){
                     labelField(label: "Email", icon: "envelope", placeHolder: "name@company.com", ){
-                        ZStack(alignment: .leading) {
-                            if email.isEmpty {
-                                Text("name@company.com")
-                                    .foregroundColor(.red)
-                            }
-                            TextField("", text: $email)
-                                .keyboardType(.emailAddress)
-                                .textInputAutocapitalization(.never)
-                                .autocorrectionDisabled(true)
-                                .foregroundColor(.black)
-                                .tint(accentColor)
-                        }
+                        TextField(
+                            "",
+                            text: $email,
+                            prompt: Text("name@company.com")
+                                .foregroundStyle(.gray)
+                        )
+                        .foregroundStyle(.black)
+                        .tint(accentColor)
+                        .keyboardType(.emailAddress)
+                        .textInputAutocapitalization(.never)
+                        .autocorrectionDisabled(true)
                     }
                         
                     labelPasswordField
@@ -103,7 +102,8 @@ struct LoginView: View {
             HStack{
                 HStack(spacing: 8,){
                     Image(systemName: icon).font(.system(size: 16)).foregroundColor(mutedIcon).frame(width: 18)
-                    content().font(.system(size: 15)).foregroundColor(.black)
+                    content().font(.system(size: 15))
+                        //.foregroundColor(.black)
                 }.padding(.horizontal,12).frame(height: 46).overlay(RoundedRectangle(cornerRadius: 10).stroke(borderColor, lineWidth: 1))
             }
         }
