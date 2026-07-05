@@ -13,7 +13,7 @@ struct DashboardView: View {
     ]
 
     var body: some View {
-        NavigationStack {
+        
             VStack(spacing: 0) {
                 
                 Group {
@@ -44,7 +44,7 @@ struct DashboardView: View {
                 .background(Color.white)
             }
             .ignoresSafeArea(edges: .bottom)
-        }
+        
     }
         func tabButton(icon: String, label: String, index: Int) -> some View {
             Button(action: { selectedTab = index }) {
