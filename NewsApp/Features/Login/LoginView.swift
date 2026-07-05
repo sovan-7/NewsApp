@@ -39,12 +39,12 @@ struct LoginView: View {
                                 Text("name@company.com")
                                     .foregroundColor(.red)
                             }
-//                            TextField("", text: $email)
-//                                .keyboardType(.emailAddress)
-//                                .textInputAutocapitalization(.never)
-//                                .autocorrectionDisabled(true)
-//                                .foregroundColor(.black)
-//                                .tint(accentColor)
+                            TextField("", text: $email)
+                                .keyboardType(.emailAddress)
+                                .textInputAutocapitalization(.never)
+                                .autocorrectionDisabled(true)
+                                .foregroundColor(.black)
+                                .tint(accentColor)
                         }
                     }
                         
