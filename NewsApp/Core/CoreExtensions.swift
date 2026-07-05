@@ -24,3 +24,11 @@ extension Color {
         )
     }
 }
+extension String{
+    var isValidEmail:Bool{
+        let emailRegx="^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$"
+        let emailPredicate=NSPredicate(format:"SELF MATCHES %@", emailRegx)
+        return emailPredicate.evaluate(with: self)
+    }
+     
+}
