@@ -7,7 +7,7 @@ struct PrivacyPolicyConst {
     <head>
       <meta charset="UTF-8">
       <meta name="viewport" content="width=device-width, initial-scale=1">
-      <title>Privacy Policy - B_Barna Educational Institute</title>
+      <title>Privacy Policy - Nexa News</title>
       <style>
         body {
           font-family: -apple-system, Arial, sans-serif;
@@ -28,37 +28,39 @@ struct PrivacyPolicyConst {
       <h1>Privacy Policy</h1>
 
       <h2>1. Introduction</h2>
-      <p>Welcome to Our "B_Barna Educational Institute". Your privacy is important to us, and this Privacy Policy explains how we collect, use, disclose, and protect your information when you use our educational application and website.</p>
+      <p>Welcome to "Nexa News". Your privacy is important to us, and this Privacy Policy explains how we collect, use, disclose, and protect your information when you use our news application and website.</p>
 
       <h2>2. Information We Collect</h2>
       <p>We collect the following types of information:</p>
       <ul>
         <li><strong>Personal Information:</strong> Name, email address, phone number, profile picture, etc.</li>
-        <li><strong>Usage Data:</strong> IP address, browser type, device information, pages visited, time spent on our site/app.</li>
-        <li><strong>Cookies and Tracking Technologies:</strong> To enhance user experience and analyze trends.</li>
+        <li><strong>Usage Data:</strong> IP address, browser type, device information, articles read, time spent on our app.</li>
+        <li><strong>Location Data:</strong> To show you relevant local and regional news (only with user permission).</li>
+        <li><strong>Cookies and Tracking Technologies:</strong> To enhance user experience and analyze reading trends.</li>
       </ul>
 
       <h2>3. How We Use Your Information</h2>
       <p>We use your information to:</p>
       <ul>
-        <li>Provide and improve our services.</li>
-        <li>Personalize user experience.</li>
+        <li>Provide and improve our news services.</li>
+        <li>Personalize your news feed based on your interests.</li>
         <li>Respond to inquiries and customer support requests.</li>
         <li>Analyze usage and improve our app and website.</li>
-        <li>Send updates, promotions, or educational content (only with user consent).</li>
+        <li>Send breaking news alerts, updates, or notifications (only with user consent).</li>
       </ul>
 
       <h2>4. Information Sharing and Disclosure</h2>
       <p>We do not sell or rent user data. However, we may share information with:</p>
       <ul>
-        <li><strong>Service Providers:</strong> Third-party partners who assist in app/website functionality.</li>
+        <li><strong>Service Providers:</strong> Third-party partners who assist in app/website functionality, such as analytics and push notification services.</li>
+        <li><strong>Advertising Partners:</strong> To display relevant ads, without sharing personally identifiable information.</li>
         <li><strong>Legal Authorities:</strong> If required by law or to protect our rights.</li>
       </ul>
 
       <h2>5. Cookies and Tracking Technologies</h2>
       <p>We use cookies to:</p>
       <ul>
-        <li>Remember user preferences.</li>
+        <li>Remember user preferences and reading history.</li>
         <li>Analyze app/website traffic.</li>
         <li>Improve user experience. Users can disable cookies from browser settings.</li>
       </ul>
@@ -70,7 +72,7 @@ struct PrivacyPolicyConst {
       <p>Users have the right to:</p>
       <ul>
         <li>Access, update, or delete their personal data.</li>
-        <li>Opt out of marketing communications.</li>
+        <li>Opt out of marketing communications and push notifications.</li>
         <li>Request data portability.</li>
       </ul>
 
@@ -83,7 +85,7 @@ struct PrivacyPolicyConst {
       <h2>10. Contact Us</h2>
       <p>If you have any questions about this Privacy Policy, please contact us at:</p>
       <ul>
-        <li><strong>Gmail:</strong> contact.bbarna@gmail.com</li>
+        <li><strong>Gmail:</strong> contact.nexanews@gmail.com</li>
         <li><strong>Phone:</strong> 7001739646</li>
       </ul>
 

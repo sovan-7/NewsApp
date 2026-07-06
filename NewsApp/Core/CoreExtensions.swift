@@ -32,3 +32,41 @@ extension String{
     }
      
 }
+enum LegalContentType {
+    case privacyPolicy
+    case termsAndConditions
+    case aboutUs
+
+    var title: String {
+        switch self {
+        case .privacyPolicy:
+            return "Privacy Policy"
+        case .termsAndConditions:
+            return "Terms & Conditions"
+        case .aboutUs:
+            return "About Us"
+        }
+    }
+
+    var imageName: String {
+        switch self {
+        case .privacyPolicy:
+            return "PrivacyPolicy"
+        case .termsAndConditions:
+            return "TermsAndConditions"
+        case .aboutUs:
+            return "AboutUs"
+        }
+    }
+
+    var htmlContent: String {
+        switch self {
+        case .privacyPolicy:
+            return PrivacyPolicyConst.privacyPolicy
+        case .termsAndConditions:
+            return TermsAndConditionsConst.termsAndConditions
+        case .aboutUs:
+            return AboutUsConst.aboutUs
+        }
+    }
+}

@@ -8,11 +8,13 @@ struct AppRouter: View {
     
     
     var body: some View {
-        
+        Group {
         if appState.isLoggedIn {
             DashboardView()
         } else {
             LoginView()
         }
+        }
+                .environmentObject(appState)
     }
 }

@@ -12,6 +12,7 @@ struct LoginView: View {
     @State private var rememberMe: Bool = false
     @State private var loginFormError = LoginFormError()
     @State private var path = NavigationPath()
+    @EnvironmentObject var appState: AppState
 
     private let accentColor   = Color(hex: 0x378ADD)
     private let accentLight   = Color(hex: 0xE6F1FB)
@@ -83,6 +84,7 @@ struct LoginView: View {
 
                         Button(action: {
                             if isFormValid {
+                                appState.login(user:User(id: UUID(),name: "Sovan", email: "sovan@example.com"))
                                 path.append("dashboard")
                             }
                         }) {
