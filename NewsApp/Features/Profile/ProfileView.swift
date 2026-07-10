@@ -10,8 +10,10 @@ struct ProfileView: View {
         ("rectangle.portrait.and.arrow.right", "Logout")
     ]
     @State private var path = NavigationPath()
-    
-    
+    @State private var showShareSheet = false
+    private let appStoreLink = "https://apps.apple.com/app/id123456789"
+    @State private var showLogoutAlert = false
+    @State private var appState=AppState()
     var body: some View {
         NavigationStack(path: $path){
             ScrollView {
@@ -139,6 +141,22 @@ struct ProfileView: View {
                 }else if value == "aboutUs" {
                     AppContentView( contentType: LegalContentType.aboutUs)
                 }
+            }.sheet(isPresented: $showShareSheet) {
+                ShareSheet(items: [
+                    "Check out Nexa News — your go-to app for real-time news updates! Download it here: \(appStoreLink)"
+                ])
+            }.overlay {
+                if showLogoutAlert {
+                    LogoutAlert(
+                        onCancel: { showLogoutAlert = false },
+                        onConfirm: {
+                            showLogoutAlert = false
+                            performLogout()
+                        }
+                    )
+                    .transition(.opacity.combined(with: .scale(scale: 0.9)))
+                    .animation(.easeInOut(duration: 0.2), value: showLogoutAlert)
+                }
             }
         }
     }
@@ -158,17 +176,36 @@ private func handleMenuTap(_ title: String) {
              path.append("aboutUs")
             break
         case "Share":
-            // trigger UIActivityViewController via a helper, not navigation
+            showShareSheet = true
             break
         case "Logout":
-            // handle logout logic (e.g., set isLoggedIn = false at app root)
+            showLogoutAlert = true
             break
         default:
             break
         }
     }
+    
+    private func performLogout() {
+        appState.logout()
+        }
 }
 
+struct ShareSheet: UIViewControllerRepresentable {
+    let items: [Any]
+
+    func makeUIViewController(context: Context) -> UIActivityViewController {
+        let controller = UIActivityViewController(activityItems: items, applicationActivities: nil)
+        controller.excludedActivityTypes = [
+            .assignToContact,
+            .saveToCameraRoll,
+            .print
+        ]
+        return controller
+    }
+
+    func updateUIViewController(_ uiViewController: UIActivityViewController, context: Context) {}
+}
 
 #Preview {
     ProfileView()

@@ -14,11 +14,7 @@ struct LoginView: View {
     @State private var path = NavigationPath()
     @EnvironmentObject var appState: AppState
 
-    private let accentColor   = Color(hex: 0x378ADD)
-    private let accentLight   = Color(hex: 0xE6F1FB)
-    private let borderColor   = Color(hex: 0xD8D8D8)
-    private let secondaryText = Color(hex: 0x6B6B6B)
-    private let mutedIcon     = Color(hex: 0x9A9A9A)
+    @EnvironmentObject var themeManager: ThemeManager
 
     var body: some View {
         NavigationStack(path: $path) {
@@ -27,26 +23,30 @@ struct LoginView: View {
                     logoBadge.padding(.top, 40)
 
                     VStack {
-                        Text("Welcome Back").font(.system(size: 25, weight: .bold)).foregroundColor(.black)
+                        Text("Welcome back")
+                            .font(.system(size: 25, weight: .bold))
+                            .foregroundColor(.black)
                         Text("Sign in to pick up where you left off.")
                             .font(.system(size: 16))
-                            .foregroundColor(secondaryText)
+                            .foregroundColor(themeManager.colors.textColorGrey)
                             .multilineTextAlignment(.center)
                     }.padding(.bottom, 8)
 
                     VStack(spacing: 16) {
                         VStack(alignment: .leading, spacing: 4) {
                             labelField(label: "Email", icon: "envelope", placeHolder: "name@company.com") {
-                                TextField(
-                                    "",
-                                    text: $email,
-                                    prompt: Text("name@company.com").foregroundStyle(.gray)
-                                )
-                                .foregroundStyle(.black)
-                                .tint(accentColor)
-                                .keyboardType(.emailAddress)
-                                .textInputAutocapitalization(.never)
-                                .autocorrectionDisabled(true)
+                                ZStack(alignment: .leading) {
+                                    if email.isEmpty {
+                                        Text("name@company.com")
+                                            .foregroundColor(themeManager.colors.textColorGrey)
+                                    }
+                                    TextField("", text: $email)
+                                        .foregroundStyle(.black)
+                                        .tint(themeManager.colors.primary)
+                                        .keyboardType(.emailAddress)
+                                        .textInputAutocapitalization(.never)
+                                        .autocorrectionDisabled(true).textContentType(.init(rawValue: ""))
+                                }
                             }
                             if !loginFormError.emailErrorMsg.isEmpty {
                                 Text(loginFormError.emailErrorMsg)
@@ -67,24 +67,36 @@ struct LoginView: View {
                         HStack {
                             Button(action: { rememberMe.toggle() }) {
                                 HStack(spacing: 6) {
-                                    Image(systemName: rememberMe ? "checkmark.square.fill" : "square")
-                                        .foregroundColor(rememberMe ? accentColor : mutedIcon)
+                                    RoundedRectangle(cornerRadius: 5)
+                                        .strokeBorder(rememberMe ? Color.clear : themeManager.colors.borderColor, lineWidth: 1.5)
+                                        .background(
+                                            RoundedRectangle(cornerRadius: 5)
+                                                .fill(rememberMe ? themeManager.colors.primary : Color.clear)
+                                        )
+                                        .frame(width: 18, height: 18)
+                                        .overlay {
+                                            if rememberMe {
+                                                Image(systemName: "checkmark")
+                                                    .font(.system(size: 11, weight: .bold))
+                                                    .foregroundColor(.white)
+                                            }
+                                        }
                                     Text("Remember me")
                                         .font(.system(size: 15))
-                                        .foregroundColor(secondaryText)
+                                        .foregroundColor(themeManager.colors.textColorGrey)
                                 }
                             }
                             Spacer()
                             Button(action: {}) {
                                 Text("Forgot?")
                                     .font(.system(size: 15, weight: .bold))
-                                    .foregroundColor(accentColor)
+                                    .foregroundColor(themeManager.colors.primary)
                             }
                         }
 
                         Button(action: {
                             if isFormValid {
-                                appState.login(user:User(id: UUID(),name: "Sovan", email: "sovan@example.com"))
+                                appState.login(user: User(id: UUID(), name: "Sovan", email: "sovan@example.com"))
                                 path.append("dashboard")
                             }
                         }) {
@@ -93,19 +105,34 @@ struct LoginView: View {
                                 .foregroundColor(.white)
                                 .frame(maxWidth: .infinity)
                                 .frame(height: 50)
-                                .background(accentColor)
-                                .cornerRadius(10)
+                                .background(themeManager.colors.primary)
+                                .cornerRadius(12)
                         }
                         .padding(.top, 4)
+
+                        dividerRow.padding(.top, 4)
+
+                        Button(action: {}) {
+                            HStack(spacing: 8) {
+                                Image(systemName: "faceid")
+                                    .font(.system(size: 16))
+                                Text("Sign in with Face ID")
+                                    .font(.system(size: 15, weight: .semibold))
+                            }
+                            .foregroundColor(.black)
+                            .frame(maxWidth: .infinity)
+                            .frame(height: 48)
+                            .overlay(RoundedRectangle(cornerRadius: 12).stroke(themeManager.colors.borderColor, lineWidth: 1.5))
+                        }
 
                         HStack(spacing: 4) {
                             Text("New here?")
                                 .font(.system(size: 15))
-                                .foregroundColor(secondaryText)
+                                .foregroundColor(themeManager.colors.textColorGrey)
                             Button(action: {}) {
                                 Text("Create an account")
                                     .font(.system(size: 15, weight: .bold))
-                                    .foregroundColor(accentColor)
+                                    .foregroundColor(themeManager.colors.primary)
                             }
                         }
                         .padding(.top, 12)
@@ -116,7 +143,7 @@ struct LoginView: View {
                 }
                 .padding(.horizontal, 24)
             }
-            .background(Color.white)
+            .background(themeManager.colors.background)
             .scrollBounceBehavior(.basedOnSize)
             .navigationDestination(for: String.self) { value in
                 if value == "dashboard" {
@@ -127,38 +154,45 @@ struct LoginView: View {
     }
 
     private var logoBadge: some View {
-        RoundedRectangle(cornerRadius: 14).fill(accentLight).frame(width: 56, height: 56).overlay {
+        RoundedRectangle(cornerRadius: 16).fill(themeManager.colors.primary).frame(width: 60, height: 60).overlay {
             Image("AppLogo")
                 .resizable()
                 .scaledToFit()
-                .frame(width: 56, height: 56)
-                .clipShape(RoundedRectangle(cornerRadius: 8))
+                .frame(width: 60, height: 60)
+                .clipShape(RoundedRectangle(cornerRadius: 10))
                 .font(.system(size: 24))
-                .foregroundColor(accentColor)
+                .foregroundColor(themeManager.colors.primary)
+        }
+    }
+
+    private var dividerRow: some View {
+        HStack(spacing: 10) {
+            Rectangle().fill(themeManager.colors.borderColor).frame(height: 1)
+            Text("or").font(.system(size: 12)).foregroundColor(themeManager.colors.textColorGrey)
+            Rectangle().fill(themeManager.colors.borderColor).frame(height: 1)
         }
     }
 
     @ViewBuilder
     private func labelField<Content: View>(label: String, icon: String, placeHolder: String, @ViewBuilder content: () -> Content) -> some View {
         VStack(alignment: .leading, spacing: 6) {
-            Text(label).font(.system(size: 15, weight: .medium)).foregroundColor(secondaryText)
-            HStack {
-                HStack(spacing: 8) {
-                    Image(systemName: icon).font(.system(size: 16)).foregroundColor(mutedIcon).frame(width: 18)
-                    content().font(.system(size: 15))
-                }
-                .padding(.horizontal, 12)
-                .frame(height: 46)
-                .overlay(RoundedRectangle(cornerRadius: 10).stroke(borderColor, lineWidth: 1))
+            Text(label).font(.system(size: 15, weight: .medium)).foregroundColor(themeManager.colors.textColorGrey)
+            HStack(spacing: 8) {
+                Image(systemName: icon).font(.system(size: 16)).foregroundColor(themeManager.colors.iconColor).frame(width: 18)
+                content().font(.system(size: 15))
             }
+            .padding(.horizontal, 12)
+            .frame(height: 48)
+            .background(themeManager.colors.borderColor)
+            .cornerRadius(12)
         }
     }
 
     private var labelPasswordField: some View {
         VStack(alignment: .leading, spacing: 6) {
-            Text("Password").font(.system(size: 15, weight: .medium)).foregroundColor(secondaryText)
+            Text("Password").font(.system(size: 15, weight: .medium)).foregroundColor(themeManager.colors.textColorGrey)
             HStack(spacing: 8) {
-                Image(systemName: "lock").font(.system(size: 16)).foregroundColor(mutedIcon).frame(width: 18)
+                Image(systemName: "lock").font(.system(size: 16)).foregroundColor(themeManager.colors.iconColor).frame(width: 18)
                 Group {
                     if isPasswordVisible {
                         TextField("Enter your password", text: $password)
@@ -166,17 +200,18 @@ struct LoginView: View {
                         SecureField("Enter your password", text: $password)
                     }
                 }
-                .font(.system(size: 17))
+                .font(.system(size: 15))
                 .foregroundColor(.black)
                 Button(action: { isPasswordVisible.toggle() }) {
                     Image(systemName: isPasswordVisible ? "eye.slash" : "eye")
                         .font(.system(size: 16))
-                        .foregroundColor(mutedIcon)
+                        .foregroundColor(themeManager.colors.iconColor)
                 }
             }
             .padding(.horizontal, 12)
-            .frame(height: 46)
-            .overlay(RoundedRectangle(cornerRadius: 10).stroke(borderColor, lineWidth: 1))
+            .frame(height: 48)
+            .background(themeManager.colors.borderColor)
+            .cornerRadius(12)
         }
     }
 
