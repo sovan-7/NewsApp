@@ -59,16 +59,16 @@ struct NewsDetails: View {
                                         .contentShape(Rectangle())
                                 case .failure(_):
                                     RoundedRectangle(cornerRadius: 0)
-                                        .fill(Color(.systemGray5))
+                                        .fill(Color(themeManager.colors.textMuted))
                                         .frame(width: geometry.size.width)
                                         .frame(height: 250)
                                         .overlay(
                                             Image(systemName: "photo")
-                                                .foregroundColor(.gray)
+                                                .foregroundColor(themeManager.colors.border)
                                         )
                                 case .empty:
                                     RoundedRectangle(cornerRadius: 0)
-                                        .fill(Color(.systemGray5))
+                                        .fill(Color(themeManager.colors.textMuted))
                                         .frame(width: geometry.size.width)
                                         .frame(height: 250)
                                         .overlay(ProgressView())

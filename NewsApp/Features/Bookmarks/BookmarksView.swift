@@ -1,7 +1,7 @@
 import SwiftUI
 
 struct BookmarksView: View {
-    @Binding var selectedArticle: Article?  // ✅ receive binding
+    @Binding var selectedArticle: Article?  
     @ObservedObject var bookmarkManager = BookmarkManager.shared
 
     var body: some View {

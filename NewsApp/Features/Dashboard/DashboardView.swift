@@ -4,7 +4,7 @@ import SwiftUI
 
 struct DashboardView: View {
     @State private var selectedTab = 0
-    @State private var selectedArticle: Article? = nil  // ✅ add this
+    @State private var selectedArticle: Article? = nil  
     let tabs: [TabItem] = [
         TabItem(icon: "house",                        label: "Home"),
         TabItem(icon: "chart.line.uptrend.xyaxis",    label: "Trending"),
@@ -20,15 +20,15 @@ struct DashboardView: View {
                 Group {
                     switch selectedTab {
                     case 0:
-                        HomeView()
+                        HomeView(selectedArticle: $selectedArticle)
                     case 1:
-                        HomeView()
+                        HomeView(selectedArticle: $selectedArticle)
                     case 2:
                         BookmarksView(selectedArticle:  $selectedArticle, )
                     case 3:
                         ProfileView()
                     default:
-                        HomeView()
+                        HomeView(selectedArticle: $selectedArticle)
                     }
                 }
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
