@@ -10,6 +10,7 @@ import SwiftUI
 struct NewsTab: View {
     let tabs: [String]
         @Binding var selectedTab: Int
+    @EnvironmentObject var themeManager: ThemeManager
 
     var body: some View {
         ScrollView(.horizontal, showsIndicators: false) {
@@ -20,15 +21,13 @@ struct NewsTab: View {
                     }) {
                         VStack(spacing: 4) {
                             Text(tabs[index])
-                                .font(.system(size: 14, weight: selectedTab == index ? .semibold : .regular))
-                                .foregroundColor(selectedTab == index ? .blue : .gray)
-                                .padding(.horizontal, 16)
-                                .padding(.vertical, 10)
+                                .font(.system(size: 14, weight: selectedTab == index ? .semibold : .semibold))
+                                .foregroundColor(selectedTab == index ? themeManager.colors.primary : themeManager.colors.border.opacity(0.7))
+                                .padding(.horizontal, selectedTab == index ? 14 : 10)
+                                .padding(.vertical, 6).background(Capsule().fill(selectedTab == index ? themeManager.colors.textWhite : .clear))
                             
-                            Rectangle()
-                                .frame(height: 2)
-                                .foregroundColor(selectedTab == index ? .blue : .clear)
-                        }
+                            
+                        } .padding(.leading, index == 0 ? 16 : 0)
                     }
                 }
             }

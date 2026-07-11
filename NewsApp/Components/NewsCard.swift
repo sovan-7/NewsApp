@@ -2,7 +2,8 @@ import SwiftUI
 
 struct NewsCard: View {
     let article: Article
-    @ObservedObject var bookmarkManager = BookmarkManager.shared  // ← add this
+    @ObservedObject var bookmarkManager = BookmarkManager.shared
+    @EnvironmentObject var themeManager: ThemeManager
     var body: some View {
         HStack(alignment: .center, spacing: 12) {
 
@@ -21,7 +22,7 @@ struct NewsCard: View {
                         .overlay(
                             Image(systemName: "newspaper")
                                 .font(.system(size: 30))
-                                .foregroundColor(.gray)
+                                .foregroundColor(themeManager.colors.border)
                         )
                 case .empty:
                     RoundedRectangle(cornerRadius: 10)
@@ -30,7 +31,7 @@ struct NewsCard: View {
                         .overlay(
                             Image(systemName: "newspaper")
                                 .font(.system(size: 30))
-                                .foregroundColor(.gray)
+                                .foregroundColor(themeManager.colors.border)
                         )
                 @unknown default:
                     EmptyView()
@@ -44,13 +45,13 @@ struct NewsCard: View {
                 Text(article.author  ?? "No Data")
                     .font(.caption)
                     .fontWeight(.regular)
-                    .foregroundColor(.black)
+                    .foregroundColor(themeManager.colors.textColor)
                     .textCase(.uppercase)
 
                 Text(article.articleDescription ?? "No description available")
                     .font(.caption)
                     .fontWeight(.semibold)
-                    .foregroundColor(.black)
+                    .foregroundColor(themeManager.colors.textColor)
                     .lineLimit(2)
 
                 HStack(spacing: 4) {
@@ -70,15 +71,15 @@ struct NewsCard: View {
 
                     Text( "BBC News")
                         .font(.caption)
-                        .foregroundColor(.gray)
+                        .foregroundColor(themeManager.colors.textMuted)
 
                     Image(systemName: "clock")
                         .font(.system(size: 12))
-                        .foregroundColor(.black)
+                        .foregroundColor(themeManager.colors.textColor)
 
                     Text(article.publishedAt.readableString  )
                         .font(.caption)
-                        .foregroundColor(.gray)
+                        .foregroundColor(themeManager.colors.textMuted)
                     Spacer()
 
                                         // ← Bookmark Button
@@ -88,18 +89,18 @@ struct NewsCard: View {
                                             Image(systemName: bookmarkManager.isBookmarked(article: article)
                                                   ? "bookmark.fill"  // ← saved
                                                   : "bookmark")      // ← not saved
-                                                .foregroundColor(.blue)
+                                            .foregroundColor(themeManager.colors.primary)
                                         }
                 }
             }
             .frame(maxWidth: .infinity, alignment: .leading)
         }
-        .padding(12) // ← this was missing, causes card to show content
+        .padding(12)
         .frame(maxWidth: .infinity)
-        .background(Color.gray.opacity(0.01))
-        .cornerRadius(14).overlay( // ← add this
+        .background(.clear)
+        .cornerRadius(14).overlay(
             RoundedRectangle(cornerRadius: 14)
-                .stroke(Color.gray.opacity(0.3), lineWidth: 0.5))
+                .stroke(themeManager.colors.border, lineWidth: 0.5))
     }
     
 

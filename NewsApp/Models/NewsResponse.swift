@@ -8,7 +8,7 @@ struct NewsResponse: Codable {
 }
 
 // MARK: - Article
-struct Article: Hashable, Equatable, Codable {
+struct Article: Hashable, Equatable, Codable,Identifiable {
     let source: Source
     let author: String?
     let title: String
@@ -22,6 +22,8 @@ struct Article: Hashable, Equatable, Codable {
         case source, author, title, url, urlToImage, publishedAt, content
         case articleDescription = "description"
     }
+    var id: String { url }
+
 }
 
 // MARK: - Source

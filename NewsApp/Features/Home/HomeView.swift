@@ -5,16 +5,17 @@ struct HomeView: View {
     @State private var selectedTab = 0
     @State private var selectedArticle: Article? = nil  // ✅ track selected article
     let tabs = ["Sports", "Politics", "Business", "Health", "Science"]
+    @EnvironmentObject var themeManager: ThemeManager
 
     var body: some View {
-        NavigationStack{
+       
         VStack(spacing: 0) {
             
                 // Header
                 HStack {
                     Text("Welcome, Sovan")
                         .font(.system(size: 20).bold())
-                        .foregroundColor(Color.blue)
+                        .foregroundColor(themeManager.colors.textWhite)
                     
                     Spacer()
                     
@@ -22,20 +23,20 @@ struct HomeView: View {
                         Button(action: {}) {
                             Image(systemName: "bell")
                                 .font(.system(size: 20))
-                                .foregroundColor(.black)
+                                .foregroundColor(themeManager.colors.textWhite)
                         }
                         Text("2")
                             .font(.system(size: 12))
                             .padding(4)
-                            .foregroundColor(.white)
-                            .background(.red)
+                            .foregroundColor(themeManager.colors.textWhite)
+                            .background(themeManager.colors.secondary)
                             .clipShape(Circle())
                             .offset(x: 4, y: -6)
                     }
                 }
                 .padding(.horizontal, 16)
                 .padding(.top, 16)
-                .padding(.bottom, 10)
+                .padding(.bottom, 10).background(themeManager.colors.primary)
                 
                 // Tabs
                 NewsTab(tabs: tabs, selectedTab: $selectedTab)
@@ -44,7 +45,7 @@ struct HomeView: View {
                         Task {
                             await viewModel.fetchNews(for: selectedTab)
                         }
-                    }
+                    }.background(themeManager.colors.primary)
                 
                 if viewModel.isLoading {
                     Spacer()
@@ -76,9 +77,7 @@ struct HomeView: View {
                     await viewModel.fetchNews(for: selectedTab)
                 }
             }
-            .background(Color.white).navigationDestination(item: $selectedArticle) { article in  // ✅ triggers navigation
-                NewsDetails(article: article)
-            }
-        }
+            .background(themeManager.colors.background)
+        
     }
 }

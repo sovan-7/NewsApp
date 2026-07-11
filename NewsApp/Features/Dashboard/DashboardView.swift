@@ -11,6 +11,7 @@ struct DashboardView: View {
         TabItem(icon: "bookmark",                     label: "Bookmarks"),
         TabItem(icon: "person",                       label: "Profile")
     ]
+    @EnvironmentObject var themeManager: ThemeManager
 
     var body: some View {
         
@@ -41,9 +42,11 @@ struct DashboardView: View {
                 }
                 .padding(.top, 10)
                 .padding(.bottom, 25)
-                .background(Color.white)
+                .background(themeManager.colors.background)
             }
-            .ignoresSafeArea(edges: .bottom)
+            .ignoresSafeArea(edges: .bottom).fullScreenCover(item: $selectedArticle) { article in
+                NewsDetails(article: article)
+            }
         
     }
         func tabButton(icon: String, label: String, index: Int) -> some View {
@@ -54,7 +57,7 @@ struct DashboardView: View {
                     Text(label)
                         .font(.system(size: 10))
                 }
-                .foregroundColor(selectedTab == index ? .black : .gray)
+                .foregroundColor(selectedTab == index ? themeManager.colors.primary : themeManager.colors.textColor.opacity(0.5))
                 .frame(maxWidth: .infinity)
             }
         
