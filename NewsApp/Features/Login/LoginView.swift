@@ -28,7 +28,7 @@ struct LoginView: View {
                             .foregroundColor(.black)
                         Text("Sign in to pick up where you left off.")
                             .font(.system(size: 16))
-                            .foregroundColor(themeManager.colors.textColorGrey)
+                            .foregroundColor(themeManager.colors.textSecondary)
                             .multilineTextAlignment(.center)
                     }.padding(.bottom, 8)
 
@@ -38,7 +38,7 @@ struct LoginView: View {
                                 ZStack(alignment: .leading) {
                                     if email.isEmpty {
                                         Text("name@company.com")
-                                            .foregroundColor(themeManager.colors.textColorGrey)
+                                            .foregroundColor(themeManager.colors.textSecondary)
                                     }
                                     TextField("", text: $email)
                                         .foregroundStyle(.black)
@@ -68,7 +68,7 @@ struct LoginView: View {
                             Button(action: { rememberMe.toggle() }) {
                                 HStack(spacing: 6) {
                                     RoundedRectangle(cornerRadius: 5)
-                                        .strokeBorder(rememberMe ? Color.clear : themeManager.colors.borderColor, lineWidth: 1.5)
+                                        .strokeBorder(rememberMe ? Color.clear : themeManager.colors.fieldBackground, lineWidth: 1.5)
                                         .background(
                                             RoundedRectangle(cornerRadius: 5)
                                                 .fill(rememberMe ? themeManager.colors.primary : Color.clear)
@@ -83,7 +83,7 @@ struct LoginView: View {
                                         }
                                     Text("Remember me")
                                         .font(.system(size: 15))
-                                        .foregroundColor(themeManager.colors.textColorGrey)
+                                        .foregroundColor(themeManager.colors.textSecondary)
                                 }
                             }
                             Spacer()
@@ -122,13 +122,13 @@ struct LoginView: View {
                             .foregroundColor(.black)
                             .frame(maxWidth: .infinity)
                             .frame(height: 48)
-                            .overlay(RoundedRectangle(cornerRadius: 12).stroke(themeManager.colors.borderColor, lineWidth: 1.5))
+                            .overlay(RoundedRectangle(cornerRadius: 12).stroke(themeManager.colors.fieldBackground, lineWidth: 1.5))
                         }
 
                         HStack(spacing: 4) {
                             Text("New here?")
                                 .font(.system(size: 15))
-                                .foregroundColor(themeManager.colors.textColorGrey)
+                                .foregroundColor(themeManager.colors.textSecondary)
                             Button(action: {}) {
                                 Text("Create an account")
                                     .font(.system(size: 15, weight: .bold))
@@ -167,32 +167,32 @@ struct LoginView: View {
 
     private var dividerRow: some View {
         HStack(spacing: 10) {
-            Rectangle().fill(themeManager.colors.borderColor).frame(height: 1)
-            Text("or").font(.system(size: 12)).foregroundColor(themeManager.colors.textColorGrey)
-            Rectangle().fill(themeManager.colors.borderColor).frame(height: 1)
+            Rectangle().fill(themeManager.colors.fieldBackground).frame(height: 1)
+            Text("or").font(.system(size: 12)).foregroundColor(themeManager.colors.textSecondary)
+            Rectangle().fill(themeManager.colors.fieldBackground).frame(height: 1)
         }
     }
 
     @ViewBuilder
     private func labelField<Content: View>(label: String, icon: String, placeHolder: String, @ViewBuilder content: () -> Content) -> some View {
         VStack(alignment: .leading, spacing: 6) {
-            Text(label).font(.system(size: 15, weight: .medium)).foregroundColor(themeManager.colors.textColorGrey)
+            Text(label).font(.system(size: 15, weight: .medium)).foregroundColor(themeManager.colors.textSecondary)
             HStack(spacing: 8) {
-                Image(systemName: icon).font(.system(size: 16)).foregroundColor(themeManager.colors.iconColor).frame(width: 18)
+                Image(systemName: icon).font(.system(size: 16)).foregroundColor(themeManager.colors.textMuted).frame(width: 18)
                 content().font(.system(size: 15))
             }
             .padding(.horizontal, 12)
             .frame(height: 48)
-            .background(themeManager.colors.borderColor)
+            .background(themeManager.colors.fieldBackground)
             .cornerRadius(12)
         }
     }
 
     private var labelPasswordField: some View {
         VStack(alignment: .leading, spacing: 6) {
-            Text("Password").font(.system(size: 15, weight: .medium)).foregroundColor(themeManager.colors.textColorGrey)
+            Text("Password").font(.system(size: 15, weight: .medium)).foregroundColor(themeManager.colors.textSecondary)
             HStack(spacing: 8) {
-                Image(systemName: "lock").font(.system(size: 16)).foregroundColor(themeManager.colors.iconColor).frame(width: 18)
+                Image(systemName: "lock").font(.system(size: 16)).foregroundColor(themeManager.colors.textMuted).frame(width: 18)
                 Group {
                     if isPasswordVisible {
                         TextField("Enter your password", text: $password)
@@ -205,12 +205,12 @@ struct LoginView: View {
                 Button(action: { isPasswordVisible.toggle() }) {
                     Image(systemName: isPasswordVisible ? "eye.slash" : "eye")
                         .font(.system(size: 16))
-                        .foregroundColor(themeManager.colors.iconColor)
+                        .foregroundColor(themeManager.colors.textMuted)
                 }
             }
             .padding(.horizontal, 12)
             .frame(height: 48)
-            .background(themeManager.colors.borderColor)
+            .background(themeManager.colors.fieldBackground)
             .cornerRadius(12)
         }
     }
