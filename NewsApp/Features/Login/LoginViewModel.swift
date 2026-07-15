@@ -1,23 +1,18 @@
-//import Foundation
-//
-//@MainActor
-//class LoginViewModel: ObservableObject {
-//    
-//    @Published var email = ""
-//    @Published var password = ""
-//    
-//    func login(appState: AppState) async {
-//        
-//        do {
-//            let user = try await AuthService.shared.login(
-//                email: email,
-//                password: password
-//            )
-//            
-//            appState.login(user: user)
-//            
-//        } catch {
-//            print(error)
-//        }
-//    }
-//}
+import Foundation
+import Combine
+@MainActor
+class LoginViewModel: ObservableObject {
+    
+    @Published var currentUser: User?
+    
+    func login(user: User) {
+        currentUser = user
+        UserDefaultsManager.shared.setIsLoggedIn(true)
+        UserDefaultsManager.shared.setUserName(currentUser?.name)
+    }
+    
+    func logout() {
+        currentUser = nil
+        UserDefaultsManager.shared.clearUserData()
+    }
+}

@@ -2,7 +2,7 @@ import SwiftUI
 struct LogoutAlert: View {
     var onCancel: () -> Void
     var onConfirm: () -> Void
-
+@EnvironmentObject var themeManager: ThemeManager
     var body: some View {
         ZStack {
             Color.black.opacity(0.4)
@@ -13,12 +13,12 @@ struct LogoutAlert: View {
                 Text("LOGOUT!")
                     .font(.system(size: 20, weight: .bold))
                     .multilineTextAlignment(.center)
-                    .foregroundColor(.black)
+                    .foregroundColor(themeManager.colors.textColor)
 
                 Text("Are you sure, want to logout?")
                     .font(.system(size: 15))
                     .multilineTextAlignment(.center)
-                    .foregroundColor(.gray)
+                    .foregroundColor(themeManager.colors.textMuted)
                     .padding(.horizontal, 8)
 
                 Spacer(minLength: 8)
@@ -30,7 +30,7 @@ struct LogoutAlert: View {
                             .foregroundColor(.black)
                             .frame(maxWidth: .infinity)
                             .padding(.vertical, 12)
-                            .background(Color(.systemGray5))
+                            .background(Color(themeManager.colors.textMuted))
                             .cornerRadius(12)
                     }
 
@@ -40,7 +40,7 @@ struct LogoutAlert: View {
                             .foregroundColor(.white)
                             .frame(maxWidth: .infinity)
                             .padding(.vertical, 12)
-                            .background(Color.red)
+                            .background(themeManager.colors.primary)
                             .cornerRadius(12)
                     }
                 }

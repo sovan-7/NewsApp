@@ -1,6 +1,10 @@
 import Foundation
 
-class NewsService {
+protocol NewsServiceProtocol {
+    func fetchTopHeadlines(category: String) async throws -> [Article]
+}
+
+class NewsService:NewsServiceProtocol {
     
     static let shared = NewsService()
     

@@ -3,6 +3,7 @@ import SwiftUI
 struct BookmarksView: View {
     @Binding var selectedArticle: Article?  
     @ObservedObject var bookmarkManager = BookmarkManager.shared
+    @EnvironmentObject var themeManager: ThemeManager
 
     var body: some View {
        
@@ -10,8 +11,8 @@ struct BookmarksView: View {
                 Color.white
                                     .ignoresSafeArea()
                 VStack(alignment: .leading,spacing: 0) {
-                           Text("Bookmarks")          // ✅ manual title
-                        .font(.largeTitle).foregroundColor(.black).bold()
+                           Text("Bookmarks")
+                        .font(.largeTitle).foregroundColor(themeManager.colors.textColor).bold()
                                .padding(.horizontal)
                 if bookmarkManager.bookmarkedArticles.isEmpty {
                     VStack {
@@ -19,7 +20,7 @@ struct BookmarksView: View {
                             .font(.system(size: 50))
                             .foregroundColor(.gray)
                         Text("No bookmarks yet")
-                            .foregroundColor(.gray)
+                            .foregroundColor(themeManager.colors.textMuted)
                     }
                 } else {
                     ScrollView {

@@ -14,6 +14,8 @@ struct ProfileView: View {
     private let appStoreLink = "https://apps.apple.com/app/id123456789"
     @State private var showLogoutAlert = false
     @State private var appState=AppState()
+    @EnvironmentObject var themeManager: ThemeManager
+
     var body: some View {
         NavigationStack(path: $path){
             ScrollView {
@@ -29,7 +31,7 @@ struct ProfileView: View {
                             .frame(width: 100, height: 100)
                             .clipShape(Circle())
                             .overlay(Circle().stroke(Color.black, lineWidth: 2))
-                            .foregroundColor(.gray)
+                            .foregroundColor(themeManager.colors.textMuted)
                         
                         // Info
                         VStack(alignment: .leading, spacing: 8) {
@@ -38,12 +40,12 @@ struct ProfileView: View {
                             HStack {
                                 Text("Sovanlal Maity")
                                     .font(.system(size: 20, weight: .bold))
-                                    .foregroundColor(.black)
+                                    .foregroundColor(themeManager.colors.textColor)
                                 Spacer()
                                 Button(action: {}) {
                                     Image(systemName: "pencil")
                                         .font(.system(size: 18))
-                                        .foregroundColor(.black)
+                                        .foregroundColor(themeManager.colors.textColor)
                                 }
                             }
                             
@@ -51,20 +53,20 @@ struct ProfileView: View {
                             HStack(spacing: 8) {
                                 Image(systemName: "iphone.and.arrow.forward")
                                     .font(.system(size: 16))
-                                    .foregroundColor(.black)
+                                    .foregroundColor(themeManager.colors.textColor)
                                 Text("+91 7602214180")
                                     .font(.system(size: 15))
-                                    .foregroundColor(.black)
+                                    .foregroundColor(themeManager.colors.textColor)
                             }
                             
                             // Email
                             HStack(spacing: 8) {
                                 Image(systemName: "envelope")
                                     .font(.system(size: 16))
-                                    .foregroundColor(.black)
+                                    .foregroundColor(themeManager.colors.textColor)
                                 Text(verbatim:"sovan@nexanews.com")
                                     .font(.system(size: 15))
-                                    .foregroundColor(.black)
+                                    .foregroundColor(themeManager.colors.textColor)
                             }
                         }
                     }
@@ -76,16 +78,16 @@ struct ProfileView: View {
                     VStack(alignment: .leading, spacing: 8) {
                         Text("10% Profile Complete")
                             .font(.system(size: 16, weight: .bold))
-                            .foregroundColor(.black)
+                            .foregroundColor(themeManager.colors.textColor)
                         
                         GeometryReader { geo in
                             ZStack(alignment: .leading) {
                                 RoundedRectangle(cornerRadius: 4)
-                                    .fill(Color(.systemGray4))
+                                    .fill(Color(themeManager.colors.textMuted))
                                     .frame(height: 8)
                                 
                                 RoundedRectangle(cornerRadius: 4)
-                                    .fill(Color.red)
+                                    .fill(themeManager.colors.secondary)
                                     .frame(width: geo.size.width * 0.10, height: 8)
                             }
                         }
@@ -104,18 +106,18 @@ struct ProfileView: View {
                             HStack(spacing: 16) {
                                 Image(systemName: item.icon)
                                     .font(.system(size: 20))
-                                    .foregroundColor(.black)
+                                    .foregroundColor(themeManager.colors.textColor)
                                     .frame(width: 28)
                                 
                                 Text(item.title)
                                     .font(.system(size: 16))
-                                    .foregroundColor(.black)
+                                    .foregroundColor(themeManager.colors.textColor)
                                 
                                 Spacer()
                                 
                                 Image(systemName: "chevron.right")
                                     .font(.system(size: 28))
-                                    .foregroundColor(.black)
+                                    .foregroundColor(themeManager.colors.textColor)
                             }
                             .padding(.horizontal, 16)
                             .padding(.vertical, 18)
@@ -127,7 +129,7 @@ struct ProfileView: View {
                     // MARK: - Version
                     Text("Version:1.0.0")
                         .font(.system(size: 14, weight: .semibold))
-                        .foregroundColor(.black)
+                        .foregroundColor(themeManager.colors.textColor)
                         .frame(maxWidth: .infinity, alignment: .center)
                         .padding(.vertical, 20)
                 }
