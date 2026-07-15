@@ -32,7 +32,7 @@ struct NewsDetails: View {
                         
                         Spacer()
                         
-                        Text(shouldHeaderShow ? "News Details":"Trending News")
+                        Text("News Details")
                             .font(.system(size: 17, weight: .semibold))
                             .foregroundColor(themeManager.colors.textColor)
                         

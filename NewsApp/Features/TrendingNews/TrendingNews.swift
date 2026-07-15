@@ -18,22 +18,11 @@ struct TrendingNews: View {
             Color.white.ignoresSafeArea()
 
             VStack(spacing: 0) {
-                HStack {
-                    Button(action: { presentationMode.wrappedValue.dismiss() }) {
-                        Image(systemName: "chevron.left")
-                            .font(.system(size: 18, weight: .semibold))
-                            .foregroundColor(themeManager.colors.textColor)
-                            .padding(10)
-                            .background(Color(themeManager.colors.background))
-                            .clipShape(Circle())
-                    }
-                    Spacer()
-                    Text("News Details")
+               
+                   
+                    Text("Trending News")
                         .font(.system(size: 17, weight: .semibold))
                         .foregroundColor(themeManager.colors.textColor)
-                    Spacer()
-                    Circle().fill(Color.clear).frame(width: 38, height: 38)
-                }
                 .padding(.horizontal, 16)
                 .padding(.vertical, 12)
                 .background(themeManager.colors.background)

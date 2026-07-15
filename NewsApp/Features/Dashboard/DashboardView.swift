@@ -27,7 +27,7 @@ struct DashboardView: View {
                     case 2:
                         BookmarksView(selectedArticle:  $selectedArticle, )
                     case 3:
-                        HomeView(viewModel: homeViewModel, selectedArticle: $selectedArticle)
+                        ProfileView()
 
                     default:
                         HomeView(viewModel: homeViewModel,selectedArticle: $selectedArticle)
