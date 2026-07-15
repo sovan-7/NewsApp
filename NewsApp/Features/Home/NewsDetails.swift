@@ -10,6 +10,7 @@ import SwiftUI
 struct NewsDetails: View {
     @Environment(\.presentationMode) var presentationMode
     let article: Article
+    var shouldHeaderShow: Bool = true
     @EnvironmentObject var themeManager: ThemeManager
     var body: some View {
         ZStack{
@@ -17,32 +18,34 @@ struct NewsDetails: View {
                 .ignoresSafeArea()
             VStack(alignment: .leading, spacing: 15) {
                 // MARK: - Custom Header
-                HStack() {
-                    Button(action: {
-                        presentationMode.wrappedValue.dismiss()
-                    }) {
-                        Image(systemName: "chevron.left")
-                            .font(.system(size: 18, weight: .semibold))
+                if shouldHeaderShow{
+                    HStack() {
+                        Button(action: {
+                            presentationMode.wrappedValue.dismiss()
+                        }) {
+                            Image(systemName: "chevron.left")
+                                .font(.system(size: 18, weight: .semibold))
+                                .foregroundColor(themeManager.colors.textColor)
+                                .padding(10).background(Color(themeManager.colors.background))
+                                .clipShape(Circle())
+                        }
+                        
+                        Spacer()
+                        
+                        Text(shouldHeaderShow ? "News Details":"Trending News")
+                            .font(.system(size: 17, weight: .semibold))
                             .foregroundColor(themeManager.colors.textColor)
-                            .padding(10).background(Color(themeManager.colors.background))
-                            .clipShape(Circle())
+                        
+                        Spacer()
+                        
+                        Circle()
+                            .fill(Color.clear)
+                            .frame(width: 38, height: 38)
                     }
-                    
-                    Spacer()
-                    
-                    Text("News Details")
-                        .font(.system(size: 17, weight: .semibold))
-                        .foregroundColor(themeManager.colors.textColor)
-                    
-                    Spacer()
-                    
-                    Circle()
-                        .fill(Color.clear)
-                        .frame(width: 38, height: 38)
+                    .padding(.horizontal, 16)
+                    .padding(.vertical, 12)
+                    .background(themeManager.colors.background)
                 }
-                .padding(.horizontal, 16)
-                .padding(.vertical, 12)
-                .background(themeManager.colors.background)
                 ScrollView {
                     VStack(alignment: .leading, spacing: 15) {
                         

@@ -8,7 +8,12 @@ class LoginViewModel: ObservableObject {
     func login(user: User) {
         currentUser = user
         UserDefaultsManager.shared.setIsLoggedIn(true)
-        UserDefaultsManager.shared.setUserName(currentUser?.name)
+        if let name = currentUser?.name {
+            UserDefaultsManager.shared.setUserName(name)
+        }
+        if let email = currentUser?.email {
+            UserDefaultsManager.shared.setUserEmail(email)
+        }
     }
     
     func logout() {

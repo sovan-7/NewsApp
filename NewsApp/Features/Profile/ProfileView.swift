@@ -13,7 +13,7 @@ struct ProfileView: View {
     @State private var showShareSheet = false
     private let appStoreLink = "https://apps.apple.com/app/id123456789"
     @State private var showLogoutAlert = false
-    @State private var appState=AppState()
+    @EnvironmentObject var loginViewModel:LoginViewModel
     @EnvironmentObject var themeManager: ThemeManager
 
     var body: some View {
@@ -189,7 +189,7 @@ private func handleMenuTap(_ title: String) {
     }
     
     private func performLogout() {
-        appState.logout()
+        loginViewModel.logout()
         }
 }
 

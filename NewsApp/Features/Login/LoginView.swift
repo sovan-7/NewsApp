@@ -12,7 +12,7 @@ struct LoginView: View {
     @State private var rememberMe: Bool = false
     @State private var loginFormError = LoginFormError()
     @State private var path = NavigationPath()
-    @EnvironmentObject var appState: AppState
+    @EnvironmentObject var loginViewModel: LoginViewModel
 
     @EnvironmentObject var themeManager: ThemeManager
 
@@ -37,8 +37,8 @@ struct LoginView: View {
                             labelField(label: "Email", icon: "envelope", placeHolder: "name@company.com") {
                                 ZStack(alignment: .leading) {
                                     if email.isEmpty {
-                                        Text("name@company.com")
-                                            .foregroundColor(themeManager.colors.textSecondary)
+                                        Text(verbatim:"name@company.com")
+                                            .foregroundColor(themeManager.colors.textMuted)
                                     }
                                     TextField("", text: $email)
                                         .foregroundStyle(.black)
@@ -51,7 +51,7 @@ struct LoginView: View {
                             if !loginFormError.emailErrorMsg.isEmpty {
                                 Text(loginFormError.emailErrorMsg)
                                     .font(.system(size: 13))
-                                    .foregroundColor(.red)
+                                    .foregroundColor(themeManager.colors.secondary)
                             }
                         }
 
@@ -60,7 +60,7 @@ struct LoginView: View {
                             if !loginFormError.passwordErrorMsg.isEmpty {
                                 Text(loginFormError.passwordErrorMsg)
                                     .font(.system(size: 13))
-                                    .foregroundColor(.red)
+                                    .foregroundColor(themeManager.colors.secondary)
                             }
                         }
 
@@ -78,7 +78,7 @@ struct LoginView: View {
                                             if rememberMe {
                                                 Image(systemName: "checkmark")
                                                     .font(.system(size: 11, weight: .bold))
-                                                    .foregroundColor(.white)
+                                                    .foregroundColor(themeManager.colors.textWhite)
                                             }
                                         }
                                     Text("Remember me")
@@ -96,8 +96,8 @@ struct LoginView: View {
 
                         Button(action: {
                             if isFormValid {
-                                appState.login(user: User(id: UUID(), name: "Sovan", email: "sovan@example.com"))
-                                path.append("dashboard")
+                                loginViewModel.login(user: User(id: UUID(), name: "Sovan", email: "sovan@example.com"))
+                                //path.append("dashboard")
                             }
                         }) {
                             Text("Sign in")
@@ -146,9 +146,9 @@ struct LoginView: View {
             .background(themeManager.colors.background)
             .scrollBounceBehavior(.basedOnSize)
             .navigationDestination(for: String.self) { value in
-                if value == "dashboard" {
-                    DashboardView()
-                }
+//                if value == "dashboard" {
+//                    DashboardView()
+//                }
             }
         }
     }

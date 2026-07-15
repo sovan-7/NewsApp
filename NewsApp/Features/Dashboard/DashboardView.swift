@@ -12,6 +12,7 @@ struct DashboardView: View {
         TabItem(icon: "person",                       label: "Profile")
     ]
     @EnvironmentObject var themeManager: ThemeManager
+    @StateObject private var homeViewModel = HomeViewModel(newsService: NewsService.shared)  // ← moved here
 
     var body: some View {
         
@@ -20,15 +21,16 @@ struct DashboardView: View {
                 Group {
                     switch selectedTab {
                     case 0:
-                        HomeView(selectedArticle: $selectedArticle)
+                        HomeView(viewModel: homeViewModel, selectedArticle: $selectedArticle)
                     case 1:
-                        HomeView(selectedArticle: $selectedArticle)
+                        TrendingNews(viewModel: homeViewModel)
                     case 2:
                         BookmarksView(selectedArticle:  $selectedArticle, )
                     case 3:
-                        ProfileView()
+                        HomeView(viewModel: homeViewModel, selectedArticle: $selectedArticle)
+
                     default:
-                        HomeView(selectedArticle: $selectedArticle)
+                        HomeView(viewModel: homeViewModel,selectedArticle: $selectedArticle)
                     }
                 }
                 .frame(maxWidth: .infinity, maxHeight: .infinity)

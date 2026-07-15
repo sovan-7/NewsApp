@@ -1,7 +1,7 @@
 import SwiftUI
 
 struct HomeView: View {
-    @StateObject private var viewModel = HomeViewModel(newsService: NewsService.shared)
+    @ObservedObject  var viewModel : HomeViewModel
     @State private var selectedTab = 0
     @Binding  var selectedArticle: Article?
     let tabs = ["Sports", "Politics", "Business", "Health", "Science"]

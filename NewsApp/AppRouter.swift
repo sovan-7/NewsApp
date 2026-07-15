@@ -4,21 +4,21 @@ import SwiftUI
 
 struct AppRouter: View {
     ///EnvironmentObject is like global storage for view
-    @EnvironmentObject var appState: AppState
+    @EnvironmentObject var loginViewModel: LoginViewModel
     
     @StateObject private var themeManager = ThemeManager()
     @Environment(\.colorScheme) private var systemColorScheme 
 
     var body: some View {
         Group {
-        if appState.isLoggedIn {
+            if (UserDefaultsManager.shared.getIsLoggedIn()) {
             DashboardView()
         } else {
             LoginView()
         }
         }.environmentObject(themeManager)
             .preferredColorScheme(themeManager.colorScheme)
-                .environmentObject(appState)
+                .environmentObject(loginViewModel)
                 .onAppear {
                     themeManager.updateColors(system: systemColorScheme)
                 }

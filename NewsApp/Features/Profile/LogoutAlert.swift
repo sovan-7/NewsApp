@@ -30,7 +30,7 @@ struct LogoutAlert: View {
                             .foregroundColor(.black)
                             .frame(maxWidth: .infinity)
                             .padding(.vertical, 12)
-                            .background(Color(themeManager.colors.textMuted))
+                            .background(Color(themeManager.colors.border))
                             .cornerRadius(12)
                     }
 

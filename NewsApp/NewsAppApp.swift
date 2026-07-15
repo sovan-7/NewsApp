@@ -9,12 +9,12 @@ import SwiftUI
 
 @main
 struct NewsAppApp: App {
-    @StateObject  private var appState = AppState()
+    @StateObject  private var loginViewModel = LoginViewModel()
     let persistence = PersistenceController.shared
     var body: some Scene {
         WindowGroup {
             AppRouter()
-                            .environmentObject(appState)
+                            .environmentObject(loginViewModel)
         }
     }
 }
